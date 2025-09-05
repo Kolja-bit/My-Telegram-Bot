@@ -45,12 +45,4 @@ public class Subscribers {
         this.userSubscriptionPrice = userSubscriptionPrice;
     }
 }
-    /*@bot.message_handler(commands=['start'])
-    def start_message(message):
-        your_variable = message.from_user.id*/
-
-/*import org.telegram.telegrambots.meta.api.objects.Update;
-public void onUpdateReceived(Update update) {
-        Long user_id = update.getMessage().getFrom().getId();
-        // Далее можно использовать user_id для проверки подписки на канал и выполнения других операций
-        }*/
+    
