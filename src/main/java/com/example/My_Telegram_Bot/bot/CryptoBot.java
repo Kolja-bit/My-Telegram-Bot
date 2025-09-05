@@ -1,5 +1,7 @@
 package com.example.My_Telegram_Bot.bot;
 
+import com.example.My_Telegram_Bot.service.CryptoCurrencyService;
+import com.example.My_Telegram_Bot.utils.TextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,5 +36,6 @@ public class CryptoBot extends TelegramLongPollingCommandBot {
 
     @Override
     public void processNonCommandUpdate(Update update) {
+
     }
 }

@@ -42,6 +42,9 @@ public class StartCommand implements IBotCommand {
                 Поддерживаемые команды:
                  /get_price - получить стоимость биткоина
                  /start - регистрация нового пользователя
+                 /subscribe [желаемая стоимость биткоина] - цена, на которую подписан пользователь
+                 /get_subscription - вывод информации о ваших подписках
+                 /unsubscribe - удаление подписки
                 """);
         try {
             Subscribers subscribers = new Subscribers();
