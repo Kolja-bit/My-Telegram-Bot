@@ -7,44 +7,50 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
 
 @Service
 public class AutomaticSendingOfMessages {
     private final CryptoCurrencyService service;
     private  final PriceRepository priceRepository;
+    private final AbsSender absSender;
 
-    public AutomaticSendingOfMessages(CryptoCurrencyService service, PriceRepository priceRepository) {
+    public AutomaticSendingOfMessages(CryptoCurrencyService service,
+                                      PriceRepository priceRepository, AbsSender absSender) {
         this.service = service;
         this.priceRepository = priceRepository;
+        this.absSender = absSender;
     }
-    public String getCurrentPriceOfBitcoin(){
-        String priceBitcoin = "";
+    @Scheduled(fixedDelay = 10000)
+    public void getCurrentPriceOfBitcoin(){
         try {
-            priceBitcoin = TextUtil.toString(service.getBitcoinPrice());
+            service.getBitcoinPrice();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return priceBitcoin;
     }
     public List<Subscribers> getListOfSuitableSubscriptions(){
-        List<Subscribers> listSubscribers = priceRepository
-                .findAllByUserSubscriptionPrice(getCurrentPriceOfBitcoin());
+        List<Subscribers> listSubscribers = null;
+        try {
+            listSubscribers = priceRepository
+                    .findAllSubscriptionPrice(service.getBitcoinPrice());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return listSubscribers;
     }
     @Scheduled(fixedDelay = 60000)
-    public void sendingMessage(AbsSender absSender){
+    public void sendingMessage() {
         for (Subscribers subscribers:getListOfSuitableSubscriptions()){
-            Long userId = subscribers.getTelegramUserID();
-            SendMessage answer = new SendMessage();
-            answer.setChatId(userId);
-            answer.setText("Пора покупать, стоимость биткоина " + getCurrentPriceOfBitcoin() + " USD");
             try {
+                Long userId = subscribers.getTelegramUserID();
+                SendMessage answer = new SendMessage();
+                answer.setChatId(userId);
+                answer.setText("Пора покупать, стоимость биткоина "
+                        + TextUtil.toString(service.getBitcoinPrice()) + " USD");
                 absSender.execute(answer);
             } catch (Exception e) {
                 e.printStackTrace();

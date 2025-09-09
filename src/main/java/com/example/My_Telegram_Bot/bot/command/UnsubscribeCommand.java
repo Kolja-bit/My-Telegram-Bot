@@ -40,15 +40,15 @@ public class UnsubscribeCommand implements IBotCommand {
             Long userId = message.getFrom().getId();
             Subscribers subscribers = priceRepository.findByTelegramUserID(userId).orElseThrow();
             UUID uuidUser = subscribers.getUuidUser();
-            String userSubscriptionPrice = subscribers.getUserSubscriptionPrice();
-            if (userSubscriptionPrice.equals("null")){
+            Double userSubscriptionPrice = subscribers.getUserSubscriptionPrice();
+            if (userSubscriptionPrice == null){
                 answer.setText("Актуальные подписки отсутствуют");
                 absSender.execute(answer);
             }else {
                 Subscribers subscribersNow = new Subscribers();
                 subscribersNow.setUuidUser(uuidUser);
                 subscribersNow.setTelegramUserID(userId);
-                subscribersNow.setUserSubscriptionPrice("null");
+                subscribersNow.setUserSubscriptionPrice(null);
                 priceRepository.save(subscribersNow);
             }
             answer.setText("Подписка отменена");

@@ -1,5 +1,7 @@
 package com.example.My_Telegram_Bot.bot;
 
+import com.example.My_Telegram_Bot.repositories.PriceRepository;
+import com.example.My_Telegram_Bot.service.AutomaticSendingOfMessages;
 import com.example.My_Telegram_Bot.service.CryptoCurrencyService;
 import com.example.My_Telegram_Bot.utils.TextUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -17,15 +19,14 @@ public class CryptoBot extends TelegramLongPollingCommandBot {
 
     private final String botUsername;
 
-
     public CryptoBot(
             @Value("${telegram.bot.token}") String botToken,
             @Value("${telegram.bot.username}") String botUsername,
             List<IBotCommand> commandList
+
     ) {
         super(botToken);
         this.botUsername = botUsername;
-
         commandList.forEach(this::register);
     }
 

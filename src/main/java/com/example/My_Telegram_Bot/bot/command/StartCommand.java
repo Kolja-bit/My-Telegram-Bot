@@ -50,7 +50,7 @@ public class StartCommand implements IBotCommand {
             Subscribers subscribers = new Subscribers();
             Long userId = message.getFrom().getId();
             subscribers.setTelegramUserID(userId);
-            subscribers.setUserSubscriptionPrice("null");
+            subscribers.setUserSubscriptionPrice(null);
             priceRepository.save(subscribers);
             absSender.execute(answer);
         } catch (TelegramApiException e) {

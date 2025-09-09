@@ -41,11 +41,12 @@ public class GetSubscriptionCommand implements IBotCommand {
         try {
             Long userId = message.getFrom().getId();
             Subscribers subscribers = priceRepository.findByTelegramUserID(userId).orElseThrow();
-            String userSubscriptionPrice = subscribers.getUserSubscriptionPrice();
-            if (userSubscriptionPrice.equals("null")){
+            Double userSubscriptionPrice = subscribers.getUserSubscriptionPrice();
+            if (userSubscriptionPrice == null){
                 answer.setText("Актуальные подписки отсутствуют");
             }else {
-                answer.setText("Вы подписаны на стоимость биткоина " + userSubscriptionPrice + " USD");
+                answer.setText("Вы подписаны на стоимость биткоина "
+                        + String.valueOf(userSubscriptionPrice) + " USD");
             }
 
             absSender.execute(answer);

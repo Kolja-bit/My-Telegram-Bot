@@ -48,7 +48,8 @@ public class SubscribeCommand implements IBotCommand {
             subscribersNow.setTelegramUserID(userId);
             String regex = "[0-9]+";
             if(arguments[0].matches(regex)){
-                subscribersNow.setUserSubscriptionPrice(arguments[0]);
+                Double d = Double.valueOf(arguments[0]);
+                subscribersNow.setUserSubscriptionPrice(d);
                 priceRepository.save(subscribersNow);
                 answer.setText("Текущая цена биткоина " + TextUtil.toString(service.getBitcoinPrice()) + " USD");
                 absSender.execute(answer);

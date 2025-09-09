@@ -19,13 +19,10 @@ public class CryptoCurrencyService {
         this.client = client;
     }
 
-    //@Scheduled(fixedDelay = 120000,timeUnit = TimeUnit.DAYS)
-    //@Scheduled(fixedDelay = 120000)
     public double getBitcoinPrice() throws IOException {
         if (price.get() == null) {
             price.set(client.getBitcoinPrice());
         }
-        //System.out.println(price.get());
         return price.get();
     }
 }

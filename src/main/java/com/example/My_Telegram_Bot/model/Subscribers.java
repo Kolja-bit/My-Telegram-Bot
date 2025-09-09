@@ -19,7 +19,7 @@ public class Subscribers {
     @Column(name = "telegramUserID")
     private Long telegramUserID;
     @Column(name = "userSubscriptionPrice", nullable = true)
-    private String userSubscriptionPrice;
+    private Double userSubscriptionPrice;
 
     public UUID getUuidUser() {
         return uuidUser;
@@ -36,12 +36,10 @@ public class Subscribers {
     public void setTelegramUserID(Long telegramUserID) {
         this.telegramUserID = telegramUserID;
     }
-
-    public String getUserSubscriptionPrice() {
+    public Double getUserSubscriptionPrice() {
         return userSubscriptionPrice;
     }
-
-    public void setUserSubscriptionPrice(String userSubscriptionPrice) {
+    public void setUserSubscriptionPrice(Double userSubscriptionPrice) {
         this.userSubscriptionPrice = userSubscriptionPrice;
     }
 }
