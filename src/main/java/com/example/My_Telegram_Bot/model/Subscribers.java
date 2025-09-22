@@ -43,4 +43,3 @@ public class Subscribers {
         this.userSubscriptionPrice = userSubscriptionPrice;
     }
 }
-    

@@ -1,0 +1,22 @@
+services:
+  my-telegram-bot:
+    image: my-telegram-bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    depends_on:
+      - service-db
+    environment:
+      - SERVER_PORT= 8090
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/db
+  service-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
